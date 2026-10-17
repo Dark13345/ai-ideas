@@ -3,142 +3,140 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI Торговые идеи</title>
+<title>AI Торговые идеи — NPB Markets</title>
 <meta name="description" content="Торговые идеи по золоту, валютам, биткоину и S&P 500: 6 индикаторов, итог голосованием, уровни цели и стопа">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* Стиль NPB Markets по стандарту invest-start.net: Montserrat в заголовках, Roboto в тексте, зелёный #009B7A */
 :root {
-  --bg: #f5f5f5; --card: #fff; --text: #1c1f22; --text2: #6b7178; --text3: #9aa0a6;
-  --line: #e6e8eb; --accent: #fa6a1c; --buy: #02ad49; --sell: #d40d2e; --hold: #8b95a5;
-  --buy-bg: #e9f8ef; --sell-bg: #fdecef; --hold-bg: #eef0f3; --overlay: rgba(20, 22, 25, .55);
-  --grad: linear-gradient(90deg, #fa6a1c 0%, #fc3b3c 18%, #f11870 42%, #c4469a 66%, #773dd9 92%, #6855d9 100%);
-  --r: 16px;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #1b1e21; --card: #252a2e; --text: #eef0f2; --text2: #a3a9b0; --text3: #737a82;
-    --line: #353b40; --buy-bg: #12301f; --sell-bg: #3a1a20; --hold-bg: #30363b; --overlay: rgba(0, 0, 0, .6);
-  }
+  color-scheme: only light;
+  --green: #009B7A; --green-d: #00876B; --green-soft: rgba(0, 155, 122, .12); --hero: #D7ECEA;
+  --bg: #fff; --card: #F5F7F9; --white: #fff; --line: #D3DAE2;
+  --text: #0A0D10; --text2: #4A5560; --text3: #8894A0;
+  --buy: #009B7A; --sell: #D92D46; --hold: #8894A0;
+  --buy-bg: rgba(0, 155, 122, .08); --sell-bg: rgba(217, 45, 70, .07); --hold-bg: #EEF1F4;
+  --overlay: rgba(10, 13, 16, .55);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 [hidden] { display: none !important; }
 html { -webkit-text-size-adjust: 100%; }
-body { background: var(--bg); color: var(--text); font: 400 16px/1.5 Roboto, "Segoe UI", Arial, sans-serif; overflow-x: hidden; }
+body { background: var(--bg); color: var(--text); font: 400 16px/1.55 Roboto, "Segoe UI", Arial, sans-serif; overflow-x: hidden; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
-.wrap { max-width: 1152px; margin: 0 auto; padding: 0 24px; }
+a { color: inherit; }
+.wrap { max-width: 1272px; margin: 0 auto; padding: 0 28px; }
 
-header { background: var(--card); border-bottom: 1px solid var(--line); }
-header .wrap { height: 64px; display: flex; align-items: center; gap: 10px; font-weight: 700; }
-.logo { width: 28px; height: 28px; border-radius: 8px; background: var(--grad); display: grid; place-items: center; color: #fff; }
-.logo svg { width: 16px; height: 16px; }
+header .wrap { height: 88px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.logo { display: inline-flex; }
+.brand-logo { height: 40px; width: auto; display: block; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--green); color: #fff;
+  font-weight: 600; font-size: 16px; line-height: 1.2; padding: 15px 32px; border-radius: 14px; text-decoration: none;
+  transition: filter .2s, background .2s; }
+.btn:hover:not(:disabled) { filter: brightness(1.08); }
+.nav-btn { border-radius: 999px; padding: 12px 24px; font-size: 15px; }
 
-main.wrap { padding-top: 40px; padding-bottom: 56px; }
-h1 { font-size: 36px; line-height: 1.2; font-weight: 700; text-wrap: balance; }
-.beta { color: var(--text2); margin-top: 4px; }
+main.wrap { padding-bottom: 64px; }
+.hero { background: var(--hero); border-radius: 40px; padding: 56px 32px 48px; display: flex; flex-direction: column; align-items: center; gap: 28px; }
+.hero-head { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.beta { display: inline-block; font-size: 13px; font-weight: 600; color: var(--green); background: rgba(255, 255, 255, .7);
+  border-radius: 30px; padding: 4px 12px; }
+h1 { font: 800 40px/50px Montserrat, Roboto, sans-serif; color: #000; text-wrap: balance; }
+.subtitle { font-size: 18px; line-height: 24px; color: var(--text2); text-wrap: balance; }
 
-.form { max-width: 420px; margin: 8px auto 0; display: flex; flex-direction: column; gap: 16px; position: relative; }
-.form::before { content: ""; position: absolute; left: 50%; top: 60%; width: 224px; height: 224px; transform: translate(-50%, -50%);
-  background: var(--accent); opacity: .3; filter: blur(140px); pointer-events: none; z-index: -1; }
-.subtitle { text-align: center; font-size: 26px; line-height: 1.3; color: var(--text2); text-wrap: balance; margin-bottom: 16px; }
-
+.form { width: 100%; max-width: 460px; display: flex; flex-direction: column; gap: 12px; }
 .select { position: relative; }
-.select-btn { width: 100%; min-height: 50px; padding: 6px 48px 6px 12px; background: var(--card); border: 1px solid var(--line);
-  border-radius: 6px; text-align: left; display: flex; flex-direction: column; justify-content: center; position: relative; }
-.select-btn:hover, .select.open .select-btn { border-color: var(--text3); }
-.select-btn small { font-size: 11px; color: var(--text2); line-height: 1.3; }
-.select-btn span { font-size: 15px; font-weight: 500; line-height: 1.4; }
+.select-btn { width: 100%; min-height: 60px; padding: 8px 52px 8px 18px; background: var(--white); border: 1px solid var(--line);
+  border-radius: 14px; text-align: left; display: flex; flex-direction: column; justify-content: center; position: relative; transition: border-color .2s; }
+.select-btn:hover, .select.open .select-btn { border-color: var(--green); }
+.select-btn small { font-size: 12px; color: var(--text3); line-height: 1.3; }
+.select-btn span { font-size: 16px; font-weight: 500; line-height: 1.4; }
 .select-btn span.ph { color: var(--text2); font-weight: 400; }
 .select.empty .select-btn small { display: none; }
-.caret { position: absolute; right: 16px; top: 50%; width: 10px; height: 10px; border: solid var(--text); border-width: 0 1.5px 1.5px 0;
+.caret { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; border: solid var(--text); border-width: 0 2px 2px 0;
   transform: translateY(-75%) rotate(45deg); transition: transform .2s; }
 .select.open .caret { transform: translateY(-25%) rotate(-135deg); }
-.menu { position: absolute; left: 0; right: 0; top: calc(100% + 8px); background: var(--card); border-radius: 8px; z-index: 30;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, .14); max-height: 392px; overflow-y: auto; padding: 8px 0; display: none; }
+.menu { position: absolute; left: 0; right: 0; top: calc(100% + 8px); background: var(--white); border-radius: 16px; z-index: 30;
+  box-shadow: 0 12px 32px rgba(10, 13, 16, .14); max-height: 392px; overflow-y: auto; padding: 8px 0; display: none; }
 .select.open .menu { display: block; }
 .opt { width: 100%; display: flex; align-items: center; gap: 14px; padding: 10px 20px; text-align: left; }
-.opt:hover { background: var(--bg); }
-.opt b { display: block; font-size: 14px; font-weight: 500; }
-.opt i { display: block; font-style: normal; font-size: 12px; color: var(--text2); }
-.opt .tick { margin-left: auto; color: var(--text3); visibility: hidden; }
+.opt:hover { background: var(--card); }
+.opt b { display: block; font-size: 15px; font-weight: 500; }
+.opt i { display: block; font-style: normal; font-size: 13px; color: var(--text3); }
+.opt .tick { margin-left: auto; color: var(--green); visibility: hidden; font-weight: 700; }
 .opt.sel .tick { visibility: visible; }
 
 .ico { position: relative; width: 36px; height: 36px; flex: none; }
-.ico svg { position: absolute; width: 26px; height: 26px; border-radius: 50%; box-shadow: 0 0 0 1.5px var(--card); }
+.ico svg { position: absolute; width: 26px; height: 26px; border-radius: 50%; box-shadow: 0 0 0 1.5px var(--white); }
 .ico svg:first-child { left: 0; top: 0; }
 .ico svg:last-child { right: 0; bottom: 0; }
 .ico.one svg { width: 36px; height: 36px; box-shadow: none; }
-.ico.big { width: 44px; height: 44px; }
-.ico.big svg { width: 31px; height: 31px; }
-.ico.big.one svg { width: 44px; height: 44px; }
+.ico.big { width: 48px; height: 48px; }
+.ico.big svg { width: 34px; height: 34px; }
+.ico.big.one svg { width: 48px; height: 48px; }
 
-.gen { align-self: center; min-width: 188px; height: 48px; padding: 0 24px; border-radius: 8px; background: var(--grad); color: #fff;
-  font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: inset 0 0 4px #fff;
-  transition: filter .2s, opacity .2s; }
-.gen:hover:not(:disabled) { filter: brightness(1.08); }
-.gen:disabled { opacity: .5; cursor: default; }
+.gen { margin-top: 4px; width: 100%; }
+.gen:disabled { background: #9FCFC4; cursor: default; }
 .gen svg { width: 20px; height: 20px; }
-.attempts { text-align: center; font-size: 12px; color: var(--text2); margin-top: -4px; text-wrap: balance; }
+.attempts { text-align: center; font-size: 13px; line-height: 18px; color: var(--text2); text-wrap: balance; }
 
-.perks { max-width: 420px; margin: 40px auto 0; display: flex; flex-direction: column; gap: 8px; }
-.card { background: var(--card); border-radius: var(--r); border: 1px solid var(--line); }
-.perk { padding: 16px; display: flex; align-items: center; gap: 12px; }
-.perk-i { width: 32px; height: 32px; border-radius: 12px; display: grid; place-items: center; background: rgba(250, 106, 28, .12); color: var(--accent); flex: none; }
-.perk-i svg { width: 16px; height: 16px; }
+.perks { margin-top: 32px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.card { background: var(--card); border-radius: 32px; }
+.perk { padding: 32px 32px 45px; display: flex; flex-direction: column; gap: 24px; font-size: 18px; line-height: 24px; font-weight: 500; }
+.perk-i { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; background: var(--green-soft); color: var(--green); }
+.perk-i svg { width: 26px; height: 26px; }
 
-.result { max-width: 1104px; margin: 40px auto 0; display: flex; flex-direction: column; gap: 16px; }
-.inst { padding: 16px 20px; display: flex; align-items: center; gap: 12px; }
-.inst-name b { display: block; font-size: 22px; font-weight: 500; line-height: 1.3; }
-.inst-name i { font-style: normal; font-size: 14px; color: var(--text2); }
+.result { margin-top: 32px; display: flex; flex-direction: column; gap: 16px; }
+.inst { padding: 24px 32px; display: flex; align-items: center; gap: 16px; }
+.inst-name b { display: block; font: 800 24px/28px Montserrat, Roboto, sans-serif; }
+.inst-name i { font-style: normal; font-size: 15px; color: var(--text2); }
 .inst-price { margin-left: auto; text-align: right; }
-.inst-price b { display: block; font-size: 22px; font-weight: 700; }
-.inst-price i { font-style: normal; font-size: 12px; color: var(--text2); }
+.inst-price b { display: block; font: 800 24px/28px Montserrat, Roboto, sans-serif; }
+.inst-price i { font-style: normal; font-size: 13px; color: var(--text3); }
 .inst-note { display: none; }
 
-.main-card { padding: 32px; display: flex; flex-direction: column; gap: 24px; }
-.chart { position: relative; height: 242px; }
+.main-card { padding: 32px 32px 45px; display: flex; flex-direction: column; gap: 24px; }
+.chart { position: relative; height: 260px; background: var(--white); border-radius: 20px; padding: 16px 12px 8px 16px; }
 .chart svg { width: 100%; height: 100%; display: block; overflow: visible; }
-.chart text { font-size: 11px; fill: var(--text2); }
-.tip { position: absolute; pointer-events: none; background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+.chart text { font-size: 11px; fill: var(--text3); }
+.tip { position: absolute; pointer-events: none; background: var(--white); border: 1px solid var(--line); border-radius: 10px;
   padding: 6px 10px; font-size: 12px; white-space: nowrap; box-shadow: 0 4px 14px rgba(0, 0, 0, .1); display: none; }
 
-.rec { border-radius: var(--r); border: 1px solid var(--hold); background: var(--hold-bg); padding: 24px; display: flex; flex-direction: column; gap: 10px; }
-.rec.BUY { border-color: var(--buy); background: var(--buy-bg); }
-.rec.SELL { border-color: var(--sell); background: var(--sell-bg); }
-.rec-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.rec-head h2 { font-size: 20px; font-weight: 500; }
-.badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase; line-height: 1.5; }
+.rec { border-radius: 20px; border: 1.5px solid var(--hold); background: var(--white); padding: 28px 32px 32px; display: flex; flex-direction: column; gap: 16px; }
+.rec.BUY { border-color: var(--buy); background: linear-gradient(var(--buy-bg), var(--buy-bg)), var(--white); }
+.rec.SELL { border-color: var(--sell); background: linear-gradient(var(--sell-bg), var(--sell-bg)), var(--white); }
+.rec-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.rec-head h2 { font: 800 24px/28px Montserrat, Roboto, sans-serif; }
+.badge { display: inline-block; padding: 4px 12px; border-radius: 30px; font-size: 13px; font-weight: 700; text-transform: uppercase; line-height: 1.4; }
 .badge.solid.BUY { background: var(--buy); color: #fff; }
 .badge.solid.SELL { background: var(--sell); color: #fff; }
 .badge.solid.HOLD { background: var(--hold); color: #fff; }
 .badge.soft.BUY { color: var(--buy); background: var(--buy-bg); }
 .badge.soft.SELL { color: var(--sell); background: var(--sell-bg); }
-.badge.soft.HOLD { color: var(--hold); background: var(--hold-bg); }
-.conf { font-size: 13px; color: var(--text2); }
-.rec p { color: var(--text2); }
+.badge.soft.HOLD { color: var(--text2); background: var(--hold-bg); }
+.conf { font-size: 14px; color: var(--text2); }
+.rec p { font-size: 18px; line-height: 26px; color: var(--text); }
 .levels { display: flex; gap: 8px; flex-wrap: wrap; }
-.lvl { background: var(--card); border-radius: 8px; padding: 6px 12px; font-size: 13px; color: var(--text2); }
-.lvl b { color: var(--text); font-weight: 500; margin-left: 4px; }
-.gen-at { font-size: 13px; color: var(--text3); }
-.deposit { align-self: center; height: 48px; padding: 0 24px; border-radius: 8px; background: var(--accent); color: #fff; font-weight: 700;
-  display: inline-flex; align-items: center; text-decoration: none; transition: filter .2s; }
-.deposit:hover { filter: brightness(1.08); }
+.lvl { background: var(--white); border: 1px solid var(--line); border-radius: 12px; padding: 8px 14px; font-size: 14px; color: var(--text2); }
+.lvl b { color: var(--text); font-weight: 700; margin-left: 4px; }
+.gen-at { font-size: 13px !important; line-height: 18px !important; color: var(--text3) !important; }
+.deposit { align-self: center; }
 
-.inds { padding: 8px 32px; }
-.ind { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.inds { padding: 12px 32px 20px; }
+.ind { display: flex; align-items: center; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
 .ind:last-child { border-bottom: 0; }
 .ind div { flex: 1; min-width: 0; }
-.ind b { display: block; font-size: 15px; font-weight: 500; }
-.ind i { display: block; font-style: normal; font-size: 13px; color: var(--text2); }
+.ind b { display: block; font-size: 18px; line-height: 24px; font-weight: 700; }
+.ind i { display: block; font-style: normal; font-size: 15px; line-height: 21px; color: var(--text2); }
 
-.news { padding: 24px 32px; display: flex; flex-direction: column; gap: 8px; }
-.news h2 { font-size: 17px; font-weight: 500; }
-.news p { font-size: 14px; color: var(--text2); border-left: 2px solid var(--line); padding-left: 10px; }
-.note { font-size: 12px; color: var(--text3); text-align: center; text-wrap: balance; }
-.disc-btn { align-self: center; font-weight: 500; padding: 8px 16px; border-radius: 8px; }
-.disc-btn:hover { background: var(--card); }
+.news { padding: 32px 32px 45px; display: flex; flex-direction: column; gap: 16px; }
+.news h2 { font: 800 24px/28px Montserrat, Roboto, sans-serif; }
+.news p { font-size: 18px; line-height: 24px; color: var(--text2); border-left: 3px solid var(--green); padding-left: 16px; }
+
+.note { font-size: 13px; color: var(--text3); text-align: center; text-wrap: balance; }
+.disc-btn { align-self: center; font-weight: 600; color: var(--green); padding: 8px 16px; border-radius: 14px; }
+.disc-btn:hover { background: var(--green-soft); }
 
 .overlay { position: fixed; inset: 0; z-index: 50; background: var(--overlay); backdrop-filter: blur(6px); display: none;
   flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 24px; text-align: center; }
@@ -150,52 +148,80 @@ h1 { font-size: 36px; line-height: 1.2; font-weight: 700; text-wrap: balance; }
 .stars path:nth-child(3) { animation-delay: .8s; }
 @keyframes pulse { 0% { opacity: 0; transform: scale(.5); } 30% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(.5); } }
 
-.modal { background: var(--card); border-radius: 20px; max-width: 560px; width: 100%; padding: 32px; text-align: left;
+.modal { background: var(--white); border-radius: 32px; max-width: 560px; width: 100%; padding: 32px 32px 40px; text-align: left;
   display: flex; flex-direction: column; gap: 20px; max-height: calc(100vh - 48px); overflow-y: auto; }
-.modal h3 { font-size: 28px; line-height: 1.2; }
-.modal .box { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 20px; font-size: 14px; display: flex; flex-direction: column; gap: 12px; }
+.modal h3 { font: 800 28px/34px Montserrat, Roboto, sans-serif; }
+.modal .box { background: var(--card); border-radius: 16px; padding: 20px; font-size: 15px; display: flex; flex-direction: column; gap: 12px; }
 .modal .btns { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
-.btn2 { height: 44px; padding: 0 20px; border-radius: 8px; background: var(--bg); font-weight: 500; }
-.modal .deposit { height: 44px; }
+.btn2 { padding: 15px 28px; border-radius: 14px; background: var(--card); font-weight: 600; }
 .modal.center { text-align: center; align-items: center; }
+.modal.center .btns { justify-content: center; }
 
 .error { text-align: center; color: var(--sell); }
 
+@media (max-width: 1100px) { .perks { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 767px) {
-  .wrap { padding: 0 16px; }
-  main.wrap { padding-top: 24px; padding-bottom: 40px; }
-  h1 { font-size: 28px; }
-  .subtitle { font-size: 20px; margin-bottom: 4px; }
-  .form { gap: 12px; }
-  .gen { align-self: stretch; }
-  .perks, .result { margin-top: 24px; }
-  .inst { padding: 14px 16px; flex-wrap: wrap; row-gap: 8px; }
+  .wrap { padding: 0 18px; }
+  header .wrap { height: 68px; }
+  .brand-logo { height: 32px; }
+  .nav-btn { padding: 10px 18px; font-size: 14px; }
+  .hero { border-radius: 28px; padding: 32px 18px 28px; gap: 22px; }
+  h1 { font-size: 30px; line-height: 38px; }
+  .subtitle { font-size: 17px; line-height: 23px; }
+  .perks { grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
+  .perk { padding: 20px; flex-direction: row; align-items: center; gap: 16px; font-size: 17px; line-height: 23px; }
+  .perk-i { width: 44px; height: 44px; flex: none; border-radius: 12px; }
+  .perk-i svg { width: 20px; height: 20px; }
+  .result { margin-top: 20px; gap: 12px; }
+  .card { border-radius: 24px; }
+  .inst { padding: 16px 18px; flex-wrap: wrap; row-gap: 10px; }
+  .inst-name b, .inst-price b { font-size: 19px; line-height: 24px; }
+  .inst-name i { font-size: 13px; }
   .inst-price i { display: none; }
-  .inst-note { display: block; width: 100%; font-size: 12px; color: var(--text2); padding-top: 8px; border-top: 1px solid var(--line); }
-  .inst-name b, .inst-price b { font-size: 17px; }
-  .inst-name i { font-size: 12px; }
-  .main-card { padding: 20px 16px; }
-  .chart { height: 170px; }
-  .rec { padding: 18px 16px; }
-  .rec p { font-size: 15px; }
-  .inds { padding: 4px 16px; }
-  .news { padding: 18px 16px; }
-  .deposit { align-self: stretch; justify-content: center; }
-  .modal { padding: 24px 20px; }
-  .modal h3 { font-size: 24px; }
+  .inst-note { display: block; width: 100%; font-size: 13px; color: var(--text3); padding-top: 10px; border-top: 1px solid var(--line); }
+  .main-card { padding: 18px 14px 28px; gap: 18px; }
+  .chart { height: 190px; padding: 12px 8px 6px 10px; border-radius: 16px; }
+  .rec { padding: 20px 18px 24px; gap: 12px; }
+  .rec-head h2 { font-size: 20px; line-height: 26px; }
+  .rec p { font-size: 17px; line-height: 24px; }
+  .inds { padding: 4px 18px 10px; }
+  .ind b { font-size: 17px; line-height: 23px; }
+  .ind i { font-size: 14px; line-height: 20px; }
+  .news { padding: 20px 18px 28px; }
+  .news h2 { font-size: 20px; line-height: 26px; }
+  .news p { font-size: 17px; line-height: 23px; }
+  .deposit { align-self: stretch; }
+  .modal { padding: 24px 20px 28px; border-radius: 24px; }
+  .modal h3 { font-size: 24px; line-height: 30px; }
 }
 @media (prefers-reduced-motion: reduce) { .stars path { animation: none; } }
 </style>
 </head>
 <body>
-<header><div class="wrap"><span class="logo"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 1l2.4 6.6L21 10l-6.6 2.4L12 19l-2.4-6.6L3 10l6.6-2.4z"/></svg></span>Торговые идеи</div></header>
+<header><div class="wrap"><a class="logo" href="https://ru1.npbmarkets.online" target="_blank" rel="noopener"><svg class="brand-logo" role="img" aria-label="NPB Markets" viewBox="0 0 126 40" height="40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.3559 23.4679C16.8175 23.1955 16.2229 23.0536 15.6199 23.0536C15.0168 23.0536 14.4222 23.1955 13.8838 23.4679L10.2309 25.585C9.2671 26.1385 8.49364 25.6841 8.49364 24.5796V10.4726C8.49364 9.36807 7.71295 8.91371 6.75877 9.46716L1.73487 12.3674C1.22976 12.698 0.809455 13.1435 0.508035 13.6675C0.206615 14.1915 0.0325653 14.7795 0 15.3836V29.4786C0.0338872 30.0824 0.208498 30.6698 0.5098 31.1936C0.811101 31.7175 1.2307 32.1631 1.73487 32.4948L13.9585 39.5858C14.4969 39.8582 15.0915 40 15.6946 40C16.2976 40 16.8922 39.8582 17.4306 39.5858L29.5651 32.5455C30.5289 31.9921 30.5289 31.0954 29.5651 30.5347L17.3559 23.4679Z" fill="#009B7A"/>
+    <path d="M22.4495 16.5388C22.9879 16.8112 23.5825 16.953 24.1855 16.953C24.7886 16.953 25.3832 16.8112 25.9216 16.5388L29.5769 14.4241C30.5407 13.8706 31.3118 14.3225 31.3118 15.4295V29.5341C31.3118 30.641 32.0949 31.093 33.049 30.5395L38.0729 27.6393C38.5771 27.3076 38.9967 26.862 39.298 26.3382C39.5993 25.8143 39.7739 25.2269 39.8078 24.6231V10.5305C39.774 9.92609 39.5992 9.33805 39.2975 8.81375C38.9957 8.28945 38.5755 7.84353 38.0705 7.5119L25.8373 0.413652C25.2992 0.141673 24.705 0 24.1024 0C23.4998 0 22.9057 0.141673 22.3675 0.413652L10.2307 7.45148C9.26686 8.00493 9.26686 8.90158 10.2307 9.4647L22.4495 16.5388Z" fill="#F58426"/>
+    <path d="M57.0471 32.5723V38.5226H56.4454V33.5243L54.3941 38.5226H53.8517L51.7909 33.5529V38.5226H51.1821V32.5723H51.8927L54.1241 37.7752L56.3412 32.5723H57.0471Z" fill="#009B7A"/>
+    <path d="M68.3912 37.0423H65.6316L65.0821 38.5275H64.4473L66.681 32.5771H67.3584L69.5921 38.5275H68.9312L68.3912 37.0423ZM68.2111 36.5662L67.0268 33.2864L65.8164 36.5662H68.2111Z" fill="#009B7A"/>
+    <path d="M80.2063 38.527L78.5482 35.9898H77.5699V38.527H76.9612V32.4434H78.8159C79.4981 32.4434 80.0002 32.6052 80.3413 32.9194C80.5109 33.0891 80.6432 33.2926 80.7297 33.5169C80.8162 33.7411 80.855 33.9811 80.8435 34.2213C80.8661 34.6651 80.7128 35.0999 80.4171 35.4304C80.0841 35.7521 79.6467 35.9423 79.1854 35.9659L80.8956 38.5198L80.2063 38.527ZM77.5699 35.5328H78.7732C79.7476 35.5328 80.2339 35.1099 80.2324 34.2642C80.2308 33.4184 79.7444 32.9868 78.7732 32.9694H77.5699V35.5328Z" fill="#009B7A"/>
+    <path d="M89.5244 35.4709L92.3834 38.527H91.6373L88.9914 35.6708V38.527H88.3827V32.4434H88.9914V35.2995L91.6373 32.4434H92.3834L89.5244 35.4709Z" fill="#009B7A"/>
+    <path d="M100.328 32.9337V35.2305H102.697V35.7065H100.328V38.0271H102.945V38.5293H99.7167V32.4434H102.945V32.9337H100.328Z" fill="#009B7A"/>
+    <path d="M114.076 32.4434V32.9337H112.349V38.527H111.747V32.9337H110.03V32.4434H114.076Z" fill="#009B7A"/>
+    <path d="M124.916 37.7633C124.78 38.0158 124.573 38.2227 124.321 38.3583C124.012 38.5237 123.665 38.6057 123.314 38.5963C122.957 38.6033 122.602 38.5293 122.277 38.3797C121.988 38.249 121.738 38.0457 121.55 37.7895C121.371 37.5434 121.263 37.2528 121.237 36.9493H121.872C121.9 37.1392 121.967 37.321 122.071 37.4824C122.188 37.6694 122.351 37.8228 122.545 37.9275C122.773 38.0513 123.031 38.1121 123.291 38.1036C123.451 38.1147 123.611 38.093 123.763 38.0398C123.914 37.9866 124.054 37.9031 124.172 37.7942C124.273 37.6909 124.352 37.568 124.405 37.433C124.457 37.298 124.482 37.1537 124.477 37.0088C124.487 36.7723 124.416 36.5396 124.276 36.3495C124.144 36.1798 123.972 36.045 123.776 35.9568C123.513 35.8391 123.242 35.7381 122.966 35.6545C122.654 35.559 122.348 35.4421 122.052 35.3046C121.818 35.1905 121.615 35.0205 121.462 34.8095C121.292 34.5512 121.209 34.2451 121.225 33.936C121.217 33.7256 121.255 33.516 121.337 33.3222C121.419 33.1284 121.543 32.9552 121.699 32.815C122.07 32.5097 122.542 32.3559 123.021 32.3842C123.51 32.3576 123.993 32.5069 124.383 32.8055C124.706 33.0691 124.92 33.4455 124.98 33.8599H124.335C124.278 33.5912 124.135 33.3487 123.928 33.1696C123.675 32.9564 123.35 32.8482 123.021 32.8673C122.716 32.8478 122.415 32.94 122.173 33.1268C121.992 33.3082 121.881 33.5477 121.859 33.8032C121.837 34.0588 121.905 34.314 122.052 34.5239C122.182 34.6844 122.349 34.8117 122.537 34.8952C122.729 34.9809 122.992 35.0785 123.324 35.188C123.642 35.2845 123.953 35.403 124.255 35.5426C124.497 35.6606 124.706 35.8382 124.861 36.0591C125.039 36.3303 125.126 36.6512 125.11 36.9754C125.112 37.2503 125.045 37.5213 124.916 37.7633Z" fill="#009B7A"/>
+    <path d="M74.894 28.5714H68.437L57.6391 12.2013V28.5714H51.1821V1.90479H57.6391L68.437 18.4241V1.90479H74.894V28.5714Z" fill="#009B7A"/>
+    <path d="M86.3726 19.2171V28.5714H79.9156V1.90479H90.3747C93.5467 1.90479 95.9637 2.69379 97.6255 4.27179C99.2873 5.84979 100.117 7.96826 100.116 10.6272C100.144 12.1766 99.7593 13.7057 99.0022 15.0582C98.2304 16.3828 97.0802 17.4468 95.6991 18.114C94.2394 18.8541 92.4647 19.2249 90.3747 19.2265L86.3726 19.2171ZM93.5475 10.6177C93.5475 8.27913 92.2506 7.10983 89.6568 7.10983H86.3726V14.0475H89.6568C92.249 14.0475 93.546 12.9043 93.5475 10.6177Z" fill="#009B7A"/>
+    <path d="M123.69 17.1814C124.63 18.3431 125.133 19.797 125.112 21.2905C125.112 23.5786 124.35 25.3642 122.828 26.6471C121.305 27.93 119.121 28.5714 116.276 28.5714H103.855V1.90479H115.975C118.694 1.90479 120.795 2.49575 122.28 3.67767C123.765 4.85959 124.508 6.54411 124.508 8.73122C124.508 10.3408 124.08 11.6821 123.223 12.7551C122.378 13.8187 121.191 14.5585 119.863 14.8499C121.37 15.1625 122.722 15.9863 123.69 17.1814ZM110.312 12.8048H114.539C116.781 12.8048 117.901 11.8494 117.899 9.9384C117.897 8.02743 116.752 7.07195 114.463 7.07195H110.312V12.8048ZM118.503 20.3792C118.524 19.9581 118.45 19.5377 118.286 19.1493C118.122 18.7608 117.872 18.4142 117.555 18.1353C116.924 17.5957 116.03 17.325 114.876 17.3234H110.312V23.3285H114.923C117.311 23.3285 118.505 22.3478 118.503 20.3864V20.3792Z" fill="#009B7A"/>
+    </svg></a><a class="btn nav-btn js-reg" href="https://nm-go.com/lprureg" target="_blank" rel="noopener">Открыть счёт</a></div></header>
 
 <main class="wrap">
-  <h1>AI Торговые идеи</h1>
-  <p class="beta">Beta</p>
+  <section class="hero">
+    <div class="hero-head">
+      <span class="beta">Beta</span>
+      <h1>AI Торговые идеи</h1>
+      <p class="subtitle">Откройте следующую сделку с AI</p>
+    </div>
 
   <div class="form">
-    <p class="subtitle">Откройте следующую сделку с AI</p>
     <div class="select empty" id="pairSel">
       <button class="select-btn" type="button" aria-haspopup="listbox"><small>Выберите инструмент</small><span class="ph">Выберите инструмент</span><i class="caret"></i></button>
       <div class="menu" role="listbox"></div>
@@ -204,12 +230,13 @@ h1 { font-size: 36px; line-height: 1.2; font-weight: 700; text-wrap: balance; }
       <button class="select-btn" type="button" aria-haspopup="listbox"><small>Период для анализа</small><span></span><i class="caret"></i></button>
       <div class="menu" role="listbox"></div>
     </div>
-    <button class="gen" id="gen" type="button" disabled>
+    <button class="btn gen" id="gen" type="button" disabled>
       <svg viewBox="0 0 24 24" fill="#fff"><path d="M10 3l1.8 5.2L17 10l-5.2 1.8L10 17l-1.8-5.2L3 10l5.2-1.8zM18 13l.9 2.6 2.6.9-2.6.9L18 20l-.9-2.6-2.6-.9 2.6-.9zM18 2l.7 1.8 1.8.7-1.8.7L18 7l-.7-1.8-1.8-.7 1.8-.7z"/></svg>
       Сгенерировать
     </button>
     <p class="attempts" id="attempts"></p>
   </div>
+  </section>
 
   <div class="perks" id="perks"></div>
   <div class="result" id="result" hidden></div>
@@ -217,7 +244,7 @@ h1 { font-size: 36px; line-height: 1.2; font-weight: 700; text-wrap: balance; }
 
 <div class="overlay" id="loading" aria-live="polite">
   <svg class="stars" viewBox="-10 0 80 88" aria-hidden="true">
-    <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CDFF3D"/><stop offset=".22" stop-color="#fff"/><stop offset="1" stop-color="#FF9900"/></linearGradient></defs>
+    <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9BF0D8"/><stop offset=".22" stop-color="#fff"/><stop offset="1" stop-color="#009B7A"/></linearGradient></defs>
     <path transform="translate(28 0)" fill="url(#sg)" d="M12.4 .8c.3-1 1.7-1 2 0l.4 1.8c1.3 5.3 5.7 9.4 11.1 10.4 1.1.2 1.1 1.8 0 2-5.4 1-9.8 5-11.1 10.3l-.4 1.8c-.3 1-1.7 1-2 0l-.4-1.8C10.6 20 6.2 15.9.8 14.9c-1.1-.2-1.1-1.8 0-2C6.2 11.9 10.6 7.9 12 2.6z"/>
     <path transform="translate(0 30)" fill="url(#sg)" d="M12.4 .8c.3-1 1.7-1 2 0l.4 1.8c1.3 5.3 5.7 9.4 11.1 10.4 1.1.2 1.1 1.8 0 2-5.4 1-9.8 5-11.1 10.3l-.4 1.8c-.3 1-1.7 1-2 0l-.4-1.8C10.6 20 6.2 15.9.8 14.9c-1.1-.2-1.1-1.8 0-2C6.2 11.9 10.6 7.9 12 2.6z"/>
     <path transform="translate(43 60)" fill="url(#sg)" d="M12.4 .8c.3-1 1.7-1 2 0l.4 1.8c1.3 5.3 5.7 9.4 11.1 10.4 1.1.2 1.1 1.8 0 2-5.4 1-9.8 5-11.1 10.3l-.4 1.8c-.3 1-1.7 1-2 0l-.4-1.8C10.6 20 6.2 15.9.8 14.9c-1.1-.2-1.1-1.8 0-2C6.2 11.9 10.6 7.9 12 2.6z"/>
@@ -229,7 +256,8 @@ h1 { font-size: 36px; line-height: 1.2; font-weight: 700; text-wrap: balance; }
 
 <script>
 // ---------- настройки ----------
-const DEPOSIT_URL = '#';          // куда ведёт «Пополнить»; заменить на ссылку брокера
+const REG_URL = 'https://nm-go.com/lprureg';   // регистрация NPB (стандарт лендингов)
+const UTM_2 = 'ai_ideas';                       // своя метка сервиса
 const ATTEMPTS_PER_DAY = 5;       // лимит для показа; хранится в браузере, это не защита
 const LOADING_MS = 4000;          // пауза с заставкой, как у AMarkets
 const LOADING_PHRASES = [
@@ -304,7 +332,7 @@ function useAttempt() {
 function renderAttempts() {
   const n = attemptsLeft();
   $('#attempts').textContent = `${plural(n, 'Осталась', 'Осталось', 'Осталось')} ${n} ${plural(n, 'попытка', 'попытки', 'попыток')}. ` +
-    'Пополните счёт, чтобы снять ограничение, или попробуйте снова через 24 часа.';
+    'Откройте счёт, чтобы снять ограничение, или попробуйте снова через 24 часа.';
 }
 
 // ---------- выпадающие списки ----------
@@ -365,11 +393,12 @@ function openDisclaimer() {
   openModal(`<h3>Дисклеймер</h3><div class="box">
     <p>Информация в этом разделе носит ознакомительный характер и не является финансовой или инвестиционной рекомендацией. Идеи строятся автоматически по техническим индикаторам, текст пишет ИИ и может содержать неточности.</p>
     <p>Решение о сделке вы принимаете самостоятельно и на свой риск. Торговля на финансовых рынках может привести к потере вложенных средств.</p>
-  </div><div class="btns"><button class="deposit" type="button" data-close>Закрыть</button></div>`);
+  </div><div class="btns"><button class="btn" type="button" data-close>Закрыть</button></div>`);
 }
 function openNoAttempts() {
-  openModal(`<h3>Попытки закончились</h3><p style="color:var(--text2)">Пополните счёт, чтобы снять ограничение, или попробуйте снова через 24 часа</p>
-    <div class="btns"><button class="btn2" type="button" data-close>Закрыть</button><a class="deposit" href="${DEPOSIT_URL}">Пополнить</a></div>`, true);
+  openModal(`<h3>Попытки закончились</h3><p style="color:var(--text2)">Откройте счёт в NPB Markets, чтобы снять ограничение, или попробуйте снова через 24 часа</p>
+    <div class="btns"><button class="btn2" type="button" data-close>Закрыть</button><a class="btn js-reg" href="${REG_URL}" target="_blank" rel="noopener">Открыть счёт</a></div>`, true);
+  regLinks();
 }
 
 // ---------- график ----------
@@ -401,11 +430,11 @@ function drawChart(box, points, p) {
   }
   const lx = xs(n - 1), ly = ys(points[n - 1].c);
   box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" aria-label="График цены">
-    <defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fa6a1c" stop-opacity=".5"/><stop offset="1" stop-color="#fa6a1c" stop-opacity="0"/></linearGradient></defs>
-    ${grid.join('')}<path d="${area}" fill="url(#ga)"/><path d="${line}" fill="none" stroke="#fa6a1c" stroke-width="1.5"/>
-    <circle cx="${lx}" cy="${ly}" r="9" fill="#fa6a1c" opacity=".25"><animate attributeName="r" values="5;12;5" dur="2s" repeatCount="indefinite"/></circle>
-    <circle cx="${lx}" cy="${ly}" r="4" fill="#fa6a1c"/>
-    <line id="cx" y1="${padT}" y2="${H - padB}" stroke="#fa6a1c" visibility="hidden"/>
+    <defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#009B7A" stop-opacity=".5"/><stop offset="1" stop-color="#009B7A" stop-opacity="0"/></linearGradient></defs>
+    ${grid.join('')}<path d="${area}" fill="url(#ga)"/><path d="${line}" fill="none" stroke="#009B7A" stroke-width="1.5"/>
+    <circle cx="${lx}" cy="${ly}" r="9" fill="#009B7A" opacity=".25"><animate attributeName="r" values="5;12;5" dur="2s" repeatCount="indefinite"/></circle>
+    <circle cx="${lx}" cy="${ly}" r="4" fill="#009B7A"/>
+    <line id="cx" y1="${padT}" y2="${H - padB}" stroke="#009B7A" visibility="hidden"/>
     ${labels.join('')}</svg><div class="tip"></div>`;
   const svg = box.querySelector('svg'), tip = box.querySelector('.tip'), cx = box.querySelector('#cx');
   const move = e => {
@@ -445,16 +474,17 @@ function renderResult(p, idea) {
         <p class="gen-at">Сгенерировано: ${fmtDate(idea.generated_at, true)}${idea.conclusion_source === 'ai'
           ? ` · текст написал ИИ (${esc(idea.ai_model)}), числа проверены расчётом` : ' · текст по шаблону'}</p>
       </div>
-      <a class="deposit" href="${DEPOSIT_URL}">Пополнить</a>
+      <a class="btn deposit js-reg" href="${REG_URL}" target="_blank" rel="noopener">Открыть счёт</a>
     </div>
     <div class="card inds">${idea.indicators.map(i => `<div class="ind"><div><b>${esc(i.title)}</b><i>${esc(i.signal)}</i></div>
       <span class="badge soft ${i.signal_direction}">${LABEL[i.signal_direction]}</span></div>`).join('')}</div>
     ${idea.news ? `<div class="card news"><h2>Анализ рыночных новостей и событий</h2><p>${esc(idea.news)}</p></div>` : ''}
-    <p class="note">Цены: ${esc(DATA.source)}${p.value === 'xauusd' ? ', золото по фьючерсу COMEX' : ''}. Котировки брокера могут немного отличаться</p>
+    <p class="note">Цены: ${esc(DATA.source)}${p.value === 'xauusd' ? ', золото по фьючерсу COMEX' : ''}. Котировки брокера могут немного отличаться.</p>
     <button class="disc-btn" type="button" id="discBtn">Дисклеймер</button>`;
   r.hidden = false;
   $('#perks').hidden = true;
   drawChart($('#chart'), idea.chart, p);
+  regLinks();
   $('#discBtn').addEventListener('click', openDisclaimer);
   r.scrollIntoView({behavior: 'smooth', block: 'start'});
 }
@@ -474,7 +504,7 @@ $('#gen').addEventListener('click', async () => {
   const idea = data && data.ideas[`${pair}_${tf}`];
   if (!idea) {
     $('#result').hidden = false;
-    $('#result').innerHTML = '<p class="error">Не удалось получить идею. Попробуйте через минуту</p>';
+    $('#result').innerHTML = '<p class="error">Не удалось получить идею. Попробуйте через минуту.</p>';
     return;
   }
   useAttempt();
@@ -489,7 +519,20 @@ async function loadData() {
   return DATA;
 }
 
+// ---------- ссылки на регистрацию ----------
+// Как на invest-start: передаём все параметры, с которыми пришёл посетитель (utm_* и прочие),
+// и всегда ставим свою метку utm_2 (если utm_2 пришёл с рекламы — заменяем на нашу).
+function regLinks() {
+  document.querySelectorAll('a.js-reg').forEach(a => {
+    const url = new URL(REG_URL);
+    new URLSearchParams(location.search).forEach((v, k) => { if (k !== 'utm_2') url.searchParams.set(k, v); });
+    url.searchParams.set('utm_2', UTM_2);
+    a.href = url.toString();
+  });
+}
+
 // ---------- старт ----------
+regLinks();
 $('#perks').innerHTML = PERKS.map(t => `<div class="card perk"><span class="perk-i"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1l2.4 6.6L21 10l-6.6 2.4L12 19l-2.4-6.6L3 10l6.6-2.4z"/></svg></span>${esc(t)}</div>`).join('');
 renderAttempts();
 loadData().then(d => {
@@ -503,7 +546,7 @@ loadData().then(d => {
   });
   pickTf(0);
 }).catch(() => {
-  $('#attempts').textContent = 'Не удалось загрузить список инструментов. Обновите страницу';
+  $('#attempts').textContent = 'Не удалось загрузить список инструментов. Обновите страницу.';
 });
 </script>
 </body>
