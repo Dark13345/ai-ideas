@@ -133,6 +133,9 @@ h1 { font-size: 36px; line-height: 1.2; font-weight: 700; text-wrap: balance; }
 .ind b { display: block; font-size: 15px; font-weight: 500; }
 .ind i { display: block; font-style: normal; font-size: 13px; color: var(--text2); }
 
+.news { padding: 24px 32px; display: flex; flex-direction: column; gap: 8px; }
+.news h2 { font-size: 17px; font-weight: 500; }
+.news p { font-size: 14px; color: var(--text2); border-left: 2px solid var(--line); padding-left: 10px; }
 .note { font-size: 12px; color: var(--text3); text-align: center; text-wrap: balance; }
 .disc-btn { align-self: center; font-weight: 500; padding: 8px 16px; border-radius: 8px; }
 .disc-btn:hover { background: var(--card); }
@@ -176,6 +179,7 @@ h1 { font-size: 36px; line-height: 1.2; font-weight: 700; text-wrap: balance; }
   .rec { padding: 18px 16px; }
   .rec p { font-size: 15px; }
   .inds { padding: 4px 16px; }
+  .news { padding: 18px 16px; }
   .deposit { align-self: stretch; justify-content: center; }
   .modal { padding: 24px 20px; }
   .modal h3 { font-size: 24px; }
@@ -233,7 +237,8 @@ const LOADING_PHRASES = [
   'Считаем RSI, MACD и CCI...',
   'Проверяем тренд по ADX и Parabolic SAR...',
   'Ищем уровни поддержки и сопротивления...',
-  'Собираем рекомендацию...',
+  'Читаем свежие новости...',
+  'ИИ пишет рекомендацию...',
 ];
 const PERKS = [
   '6 индикаторов по каждому инструменту',
@@ -358,7 +363,7 @@ function closeModal() { $('#modal').classList.remove('show'); }
 $('#modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });
 function openDisclaimer() {
   openModal(`<h3>Дисклеймер</h3><div class="box">
-    <p>Информация в этом разделе носит ознакомительный характер и не является финансовой или инвестиционной рекомендацией. Идеи строятся автоматически по техническим индикаторам и могут не учитывать новости и события.</p>
+    <p>Информация в этом разделе носит ознакомительный характер и не является финансовой или инвестиционной рекомендацией. Идеи строятся автоматически по техническим индикаторам, текст пишет ИИ и может содержать неточности.</p>
     <p>Решение о сделке вы принимаете самостоятельно и на свой риск. Торговля на финансовых рынках может привести к потере вложенных средств.</p>
   </div><div class="btns"><button class="deposit" type="button" data-close>Закрыть</button></div>`);
 }
@@ -437,12 +442,14 @@ function renderResult(p, idea) {
           <span class="conf">уверенность ${idea.confidence}%</span></div>
         <p>${esc(idea.conclusion)}</p>
         <div class="levels">${levels}</div>
-        <p class="gen-at">Сгенерировано: ${fmtDate(idea.generated_at, true)}</p>
+        <p class="gen-at">Сгенерировано: ${fmtDate(idea.generated_at, true)}${idea.conclusion_source === 'ai'
+          ? ` · текст написал ИИ (${esc(idea.ai_model)}), числа проверены расчётом` : ' · текст по шаблону'}</p>
       </div>
       <a class="deposit" href="${DEPOSIT_URL}">Пополнить</a>
     </div>
     <div class="card inds">${idea.indicators.map(i => `<div class="ind"><div><b>${esc(i.title)}</b><i>${esc(i.signal)}</i></div>
       <span class="badge soft ${i.signal_direction}">${LABEL[i.signal_direction]}</span></div>`).join('')}</div>
+    ${idea.news ? `<div class="card news"><h2>Анализ рыночных новостей и событий</h2><p>${esc(idea.news)}</p></div>` : ''}
     <p class="note">Цены: ${esc(DATA.source)}${p.value === 'xauusd' ? ', золото по фьючерсу COMEX' : ''}. Котировки брокера могут немного отличаться</p>
     <button class="disc-btn" type="button" id="discBtn">Дисклеймер</button>`;
   r.hidden = false;
