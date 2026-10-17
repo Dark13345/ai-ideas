@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Торговые идеи</title>
+<meta name="description" content="Торговые идеи по золоту, валютам, биткоину и S&P 500: 6 индикаторов, итог голосованием, уровни цели и стопа">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f5f5; --card: #fff; --text: #1c1f22; --text2: #6b7178; --text3: #9aa0a6;
+  --line: #e6e8eb; --accent: #fa6a1c; --buy: #02ad49; --sell: #d40d2e; --hold: #8b95a5;
+  --buy-bg: #e9f8ef; --sell-bg: #fdecef; --hold-bg: #eef0f3; --overlay: rgba(20, 22, 25, .55);
+  --grad: linear-gradient(90deg, #fa6a1c 0%, #fc3b3c 18%, #f11870 42%, #c4469a 66%, #773dd9 92%, #6855d9 100%);
+  --r: 16px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1b1e21; --card: #252a2e; --text: #eef0f2; --text2: #a3a9b0; --text3: #737a82;
+    --line: #353b40; --buy-bg: #12301f; --sell-bg: #3a1a20; --hold-bg: #30363b; --overlay: rgba(0, 0, 0, .6);
+  }
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body { background: var(--bg); color: var(--text); font: 400 16px/1.5 Roboto, "Segoe UI", Arial, sans-serif; overflow-x: hidden; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+.wrap { max-width: 1152px; margin: 0 auto; padding: 0 24px; }
+
+header { background: var(--card); border-bottom: 1px solid var(--line); }
+header .wrap { height: 64px; display: flex; align-items: center; gap: 10px; font-weight: 700; }
+.logo { width: 28px; height: 28px; border-radius: 8px; background: var(--grad); display: grid; place-items: center; color: #fff; }
+.logo svg { width: 16px; height: 16px; }
+
+main.wrap { padding-top: 40px; padding-bottom: 56px; }
+h1 { font-size: 36px; line-height: 1.2; font-weight: 700; text-wrap: balance; }
+.beta { color: var(--text2); margin-top: 4px; }
+
+.form { max-width: 420px; margin: 8px auto 0; display: flex; flex-direction: column; gap: 16px; position: relative; }
+.form::before { content: ""; position: absolute; left: 50%; top: 60%; width: 224px; height: 224px; transform: translate(-50%, -50%);
+  background: var(--accent); opacity: .3; filter: blur(140px); pointer-events: none; z-index: -1; }
+.subtitle { text-align: center; font-size: 26px; line-height: 1.3; color: var(--text2); text-wrap: balance; margin-bottom: 16px; }
+
+.select { position: relative; }
+.select-btn { width: 100%; min-height: 50px; padding: 6px 48px 6px 12px; background: var(--card); border: 1px solid var(--line);
+  border-radius: 6px; text-align: left; display: flex; flex-direction: column; justify-content: center; position: relative; }
+.select-btn:hover, .select.open .select-btn { border-color: var(--text3); }
+.select-btn small { font-size: 11px; color: var(--text2); line-height: 1.3; }
+.select-btn span { font-size: 15px; font-weight: 500; line-height: 1.4; }
+.select-btn span.ph { color: var(--text2); font-weight: 400; }
+.select.empty .select-btn small { display: none; }
+.caret { position: absolute; right: 16px; top: 50%; width: 10px; height: 10px; border: solid var(--text); border-width: 0 1.5px 1.5px 0;
+  transform: translateY(-75%) rotate(45deg); transition: transform .2s; }
+.select.open .caret { transform: translateY(-25%) rotate(-135deg); }
+.menu { position: absolute; left: 0; right: 0; top: calc(100% + 8px); background: var(--card); border-radius: 8px; z-index: 30;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .14); max-height: 392px; overflow-y: auto; padding: 8px 0; display: none; }
+.select.open .menu { display: block; }
+.opt { width: 100%; display: flex; align-items: center; gap: 14px; padding: 10px 20px; text-align: left; }
+.opt:hover { background: var(--bg); }
+.opt b { display: block; font-size: 14px; font-weight: 500; }
+.opt i { display: block; font-style: normal; font-size: 12px; color: var(--text2); }
+.opt .tick { margin-left: auto; color: var(--text3); visibility: hidden; }
+.opt.sel .tick { visibility: visible; }
+
+.ico { position: relative; width: 36px; height: 36px; flex: none; }
+.ico svg { position: absolute; width: 26px; height: 26px; border-radius: 50%; box-shadow: 0 0 0 1.5px var(--card); }
+.ico svg:first-child { left: 0; top: 0; }
+.ico svg:last-child { right: 0; bottom: 0; }
+.ico.one svg { width: 36px; height: 36px; box-shadow: none; }
+.ico.big { width: 44px; height: 44px; }
+.ico.big svg { width: 31px; height: 31px; }
+.ico.big.one svg { width: 44px; height: 44px; }
+
+.gen { align-self: center; min-width: 188px; height: 48px; padding: 0 24px; border-radius: 8px; background: var(--grad); color: #fff;
+  font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: inset 0 0 4px #fff;
+  transition: filter .2s, opacity .2s; }
+.gen:hover:not(:disabled) { filter: brightness(1.08); }
+.gen:disabled { opacity: .5; cursor: default; }
+.gen svg { width: 20px; height: 20px; }
+.attempts { text-align: center; font-size: 12px; color: var(--text2); margin-top: -4px; text-wrap: balance; }
+
+.perks { max-width: 420px; margin: 40px auto 0; display: flex; flex-direction: column; gap: 8px; }
+.card { background: var(--card); border-radius: var(--r); border: 1px solid var(--line); }
+.perk { padding: 16px; display: flex; align-items: center; gap: 12px; }
+.perk-i { width: 32px; height: 32px; border-radius: 12px; display: grid; place-items: center; background: rgba(250, 106, 28, .12); color: var(--accent); flex: none; }
+.perk-i svg { width: 16px; height: 16px; }
+
+.result { max-width: 1104px; margin: 40px auto 0; display: flex; flex-direction: column; gap: 16px; }
+.inst { padding: 16px 20px; display: flex; align-items: center; gap: 12px; }
+.inst-name b { display: block; font-size: 22px; font-weight: 500; line-height: 1.3; }
+.inst-name i { font-style: normal; font-size: 14px; color: var(--text2); }
+.inst-price { margin-left: auto; text-align: right; }
+.inst-price b { display: block; font-size: 22px; font-weight: 700; }
+.inst-price i { font-style: normal; font-size: 12px; color: var(--text2); }
+.inst-note { display: none; }
+
+.main-card { padding: 32px; display: flex; flex-direction: column; gap: 24px; }
+.chart { position: relative; height: 242px; }
+.chart svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.chart text { font-size: 11px; fill: var(--text2); }
+.tip { position: absolute; pointer-events: none; background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+  padding: 6px 10px; font-size: 12px; white-space: nowrap; box-shadow: 0 4px 14px rgba(0, 0, 0, .1); display: none; }
+
+.rec { border-radius: var(--r); border: 1px solid var(--hold); background: var(--hold-bg); padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.rec.BUY { border-color: var(--buy); background: var(--buy-bg); }
+.rec.SELL { border-color: var(--sell); background: var(--sell-bg); }
+.rec-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.rec-head h2 { font-size: 20px; font-weight: 500; }
+.badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase; line-height: 1.5; }
+.badge.solid.BUY { background: var(--buy); color: #fff; }
+.badge.solid.SELL { background: var(--sell); color: #fff; }
+.badge.solid.HOLD { background: var(--hold); color: #fff; }
+.badge.soft.BUY { color: var(--buy); background: var(--buy-bg); }
+.badge.soft.SELL { color: var(--sell); background: var(--sell-bg); }
+.badge.soft.HOLD { color: var(--hold); background: var(--hold-bg); }
+.conf { font-size: 13px; color: var(--text2); }
+.rec p { color: var(--text2); }
+.levels { display: flex; gap: 8px; flex-wrap: wrap; }
+.lvl { background: var(--card); border-radius: 8px; padding: 6px 12px; font-size: 13px; color: var(--text2); }
+.lvl b { color: var(--text); font-weight: 500; margin-left: 4px; }
+.gen-at { font-size: 13px; color: var(--text3); }
+.deposit { align-self: center; height: 48px; padding: 0 24px; border-radius: 8px; background: var(--accent); color: #fff; font-weight: 700;
+  display: inline-flex; align-items: center; text-decoration: none; transition: filter .2s; }
+.deposit:hover { filter: brightness(1.08); }
+
+.inds { padding: 8px 32px; }
+.ind { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.ind:last-child { border-bottom: 0; }
+.ind div { flex: 1; min-width: 0; }
+.ind b { display: block; font-size: 15px; font-weight: 500; }
+.ind i { display: block; font-style: normal; font-size: 13px; color: var(--text2); }
+
+.note { font-size: 12px; color: var(--text3); text-align: center; text-wrap: balance; }
+.disc-btn { align-self: center; font-weight: 500; padding: 8px 16px; border-radius: 8px; }
+.disc-btn:hover { background: var(--card); }
+
+.overlay { position: fixed; inset: 0; z-index: 50; background: var(--overlay); backdrop-filter: blur(6px); display: none;
+  flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 24px; text-align: center; }
+.overlay.show { display: flex; }
+.loading-text { color: #fff; font-size: 20px; min-height: 30px; }
+.stars { width: 56px; height: 62px; }
+.stars path { transform-box: fill-box; transform-origin: center; animation: pulse 1.5s ease-out infinite; }
+.stars path:nth-child(2) { animation-delay: .4s; }
+.stars path:nth-child(3) { animation-delay: .8s; }
+@keyframes pulse { 0% { opacity: 0; transform: scale(.5); } 30% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(.5); } }
+
+.modal { background: var(--card); border-radius: 20px; max-width: 560px; width: 100%; padding: 32px; text-align: left;
+  display: flex; flex-direction: column; gap: 20px; max-height: calc(100vh - 48px); overflow-y: auto; }
+.modal h3 { font-size: 28px; line-height: 1.2; }
+.modal .box { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 20px; font-size: 14px; display: flex; flex-direction: column; gap: 12px; }
+.modal .btns { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+.btn2 { height: 44px; padding: 0 20px; border-radius: 8px; background: var(--bg); font-weight: 500; }
+.modal .deposit { height: 44px; }
+.modal.center { text-align: center; align-items: center; }
+
+.error { text-align: center; color: var(--sell); }
+
+@media (max-width: 767px) {
+  .wrap { padding: 0 16px; }
+  main.wrap { padding-top: 24px; padding-bottom: 40px; }
+  h1 { font-size: 28px; }
+  .subtitle { font-size: 20px; margin-bottom: 4px; }
+  .form { gap: 12px; }
+  .gen { align-self: stretch; }
+  .perks, .result { margin-top: 24px; }
+  .inst { padding: 14px 16px; flex-wrap: wrap; row-gap: 8px; }
+  .inst-price i { display: none; }
+  .inst-note { display: block; width: 100%; font-size: 12px; color: var(--text2); padding-top: 8px; border-top: 1px solid var(--line); }
+  .inst-name b, .inst-price b { font-size: 17px; }
+  .inst-name i { font-size: 12px; }
+  .main-card { padding: 20px 16px; }
+  .chart { height: 170px; }
+  .rec { padding: 18px 16px; }
+  .rec p { font-size: 15px; }
+  .inds { padding: 4px 16px; }
+  .deposit { align-self: stretch; justify-content: center; }
+  .modal { padding: 24px 20px; }
+  .modal h3 { font-size: 24px; }
+}
+@media (prefers-reduced-motion: reduce) { .stars path { animation: none; } }
+</style>
+</head>
+<body>
+<header><div class="wrap"><span class="logo"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 1l2.4 6.6L21 10l-6.6 2.4L12 19l-2.4-6.6L3 10l6.6-2.4z"/></svg></span>Торговые идеи</div></header>
+
+<main class="wrap">
+  <h1>AI Торговые идеи</h1>
+  <p class="beta">Beta</p>
+
+  <div class="form">
+    <p class="subtitle">Откройте следующую сделку с AI</p>
+    <div class="select empty" id="pairSel">
+      <button class="select-btn" type="button" aria-haspopup="listbox"><small>Выберите инструмент</small><span class="ph">Выберите инструмент</span><i class="caret"></i></button>
+      <div class="menu" role="listbox"></div>
+    </div>
+    <div class="select" id="tfSel">
+      <button class="select-btn" type="button" aria-haspopup="listbox"><small>Период для анализа</small><span></span><i class="caret"></i></button>
+      <div class="menu" role="listbox"></div>
+    </div>
+    <button class="gen" id="gen" type="button" disabled>
+      <svg viewBox="0 0 24 24" fill="#fff"><path d="M10 3l1.8 5.2L17 10l-5.2 1.8L10 17l-1.8-5.2L3 10l5.2-1.8zM18 13l.9 2.6 2.6.9-2.6.9L18 20l-.9-2.6-2.6-.9 2.6-.9zM18 2l.7 1.8 1.8.7-1.8.7L18 7l-.7-1.8-1.8-.7 1.8-.7z"/></svg>
+      Сгенерировать
+    </button>
+    <p class="attempts" id="attempts"></p>
+  </div>
+
+  <div class="perks" id="perks"></div>
+  <div class="result" id="result" hidden></div>
+</main>
+
+<div class="overlay" id="loading" aria-live="polite">
+  <svg class="stars" viewBox="-10 0 80 88" aria-hidden="true">
+    <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CDFF3D"/><stop offset=".22" stop-color="#fff"/><stop offset="1" stop-color="#FF9900"/></linearGradient></defs>
+    <path transform="translate(28 0)" fill="url(#sg)" d="M12.4 .8c.3-1 1.7-1 2 0l.4 1.8c1.3 5.3 5.7 9.4 11.1 10.4 1.1.2 1.1 1.8 0 2-5.4 1-9.8 5-11.1 10.3l-.4 1.8c-.3 1-1.7 1-2 0l-.4-1.8C10.6 20 6.2 15.9.8 14.9c-1.1-.2-1.1-1.8 0-2C6.2 11.9 10.6 7.9 12 2.6z"/>
+    <path transform="translate(0 30)" fill="url(#sg)" d="M12.4 .8c.3-1 1.7-1 2 0l.4 1.8c1.3 5.3 5.7 9.4 11.1 10.4 1.1.2 1.1 1.8 0 2-5.4 1-9.8 5-11.1 10.3l-.4 1.8c-.3 1-1.7 1-2 0l-.4-1.8C10.6 20 6.2 15.9.8 14.9c-1.1-.2-1.1-1.8 0-2C6.2 11.9 10.6 7.9 12 2.6z"/>
+    <path transform="translate(43 60)" fill="url(#sg)" d="M12.4 .8c.3-1 1.7-1 2 0l.4 1.8c1.3 5.3 5.7 9.4 11.1 10.4 1.1.2 1.1 1.8 0 2-5.4 1-9.8 5-11.1 10.3l-.4 1.8c-.3 1-1.7 1-2 0l-.4-1.8C10.6 20 6.2 15.9.8 14.9c-1.1-.2-1.1-1.8 0-2C6.2 11.9 10.6 7.9 12 2.6z"/>
+  </svg>
+  <p class="loading-text" id="loadingText"></p>
+</div>
+
+<div class="overlay" id="modal" role="dialog" aria-modal="true"></div>
+
+<script>
+// ---------- настройки ----------
+const DEPOSIT_URL = '#';          // куда ведёт «Пополнить»; заменить на ссылку брокера
+const ATTEMPTS_PER_DAY = 5;       // лимит для показа; хранится в браузере, это не защита
+const LOADING_MS = 4000;          // пауза с заставкой, как у AMarkets
+const LOADING_PHRASES = [
+  'Загружаем свечи по инструменту...',
+  'Считаем RSI, MACD и CCI...',
+  'Проверяем тренд по ADX и Parabolic SAR...',
+  'Ищем уровни поддержки и сопротивления...',
+  'Собираем рекомендацию...',
+];
+const PERKS = [
+  '6 индикаторов по каждому инструменту',
+  'Итог голосованием индикаторов, без противоречий в тексте',
+  'Цель и стоп по ближайшим уровням',
+  'Пересчёт каждый час',
+];
+const LABEL = {BUY: 'Покупать', SELL: 'Продавать', HOLD: 'Нейтрально'};
+
+// ---------- иконки (из стенда Tavio + биткоин) ----------
+const FLAG = {
+  EUR: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1F3FA0"/>' +
+    [...Array(12)].map((_, i) => `<circle cx="${(12 + 6.4 * Math.cos(i * Math.PI / 6)).toFixed(2)}" cy="${(12 + 6.4 * Math.sin(i * Math.PI / 6)).toFixed(2)}" r="1.05" fill="#FFD43B"/>`).join('') + '</svg>',
+  USD: '<svg viewBox="0 0 24 24"><defs><clipPath id="cUsd"><circle cx="12" cy="12" r="12"/></clipPath></defs><g clip-path="url(#cUsd)"><rect width="24" height="24" fill="#fff"/>' +
+    [0, 2, 4, 6, 8, 10, 12].map(i => `<rect y="${i * 24 / 13}" width="24" height="${24 / 13}" fill="#D22F3C"/>`).join('') +
+    '<rect width="12" height="12.9" fill="#2A3F8F"/><circle cx="3.5" cy="3.5" r=".8" fill="#fff"/><circle cx="7.5" cy="3.5" r=".8" fill="#fff"/><circle cx="5.5" cy="6.5" r=".8" fill="#fff"/><circle cx="3.5" cy="9.5" r=".8" fill="#fff"/><circle cx="7.5" cy="9.5" r=".8" fill="#fff"/></g></svg>',
+  GBP: '<svg viewBox="0 0 24 24"><defs><clipPath id="cGbp"><circle cx="12" cy="12" r="12"/></clipPath></defs><g clip-path="url(#cGbp)"><rect width="24" height="24" fill="#1E3A8A"/>' +
+    '<path d="M0 0L24 24M24 0L0 24" stroke="#fff" stroke-width="5"/><path d="M0 0L24 24M24 0L0 24" stroke="#D22F3C" stroke-width="1.8"/>' +
+    '<path d="M12 0V24M0 12H24" stroke="#fff" stroke-width="7"/><path d="M12 0V24M0 12H24" stroke="#D22F3C" stroke-width="4"/></g></svg>',
+  JPY: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#fff"/><circle cx="12" cy="12" r="11.5" fill="none" stroke="#E2E4E8"/><circle cx="12" cy="12" r="5.5" fill="#D22F3C"/></svg>',
+  XAU: '<svg viewBox="0 0 24 24"><defs><linearGradient id="gXau" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE38A"/><stop offset=".55" stop-color="#E9B526"/><stop offset="1" stop-color="#B9831A"/></linearGradient></defs>' +
+    '<circle cx="12" cy="12" r="12" fill="url(#gXau)"/><circle cx="12" cy="12" r="8.6" fill="none" stroke="#FFF3C4" stroke-opacity=".7"/><text x="12" y="15.6" text-anchor="middle" font-size="9.5" font-weight="800" font-family="Segoe UI,Arial" fill="#7A5410">Au</text></svg>',
+  BTC: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#F7931A"/><text x="12" y="17" text-anchor="middle" font-size="14" font-weight="800" font-family="Segoe UI,Arial" fill="#fff">₿</text></svg>',
+};
+let iconN = 0;   // у каждой копии свои id, иначе обрезка и градиент в скрытой копии не рисуются
+const flag = c => FLAG[c].replace(/(cUsd|cGbp|gXau)/g, '$1_' + (++iconN));
+function icon(pair, big) {
+  const cls = 'ico' + (big ? ' big' : '');
+  if (pair === 'XAUUSD') return `<span class="${cls} one">${flag('XAU')}</span>`;
+  if (pair === 'BTCUSD') return `<span class="${cls} one">${flag('BTC')}</span>`;
+  if (pair === 'S&P500') return `<span class="${cls} one">${flag('USD')}</span>`;
+  return `<span class="${cls}">${flag(pair.slice(0, 3))}${flag(pair.slice(3, 6))}</span>`;
+}
+
+// ---------- помощники ----------
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+const plural = (n, one, few, many) => {
+  const a = n % 10, b = n % 100;
+  return a === 1 && b !== 11 ? one : a >= 2 && a <= 4 && (b < 12 || b > 14) ? few : many;
+};
+const fmtNum = (v, d) => v.toLocaleString('ru-RU', {minimumFractionDigits: d, maximumFractionDigits: d});
+const fmtPrice = (v, p) => (p.prefix || '') + fmtNum(v, p.digits);
+const fmtDate = (ts, withYear) => new Date(ts).toLocaleString('ru-RU', {day: '2-digit', month: '2-digit',
+  year: withYear ? 'numeric' : undefined, hour: '2-digit', minute: '2-digit', second: withYear ? '2-digit' : undefined});
+const store = {
+  get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* без хранилища лимит просто не запомнится */ } },
+};
+
+// ---------- попытки ----------
+function attemptsLeft() {
+  const s = store.get('ai-ideas-attempts');
+  if (!s || Date.now() - s.start > 864e5) return ATTEMPTS_PER_DAY;
+  return Math.max(0, ATTEMPTS_PER_DAY - s.used);
+}
+function useAttempt() {
+  let s = store.get('ai-ideas-attempts');
+  if (!s || Date.now() - s.start > 864e5) s = {start: Date.now(), used: 0};
+  s.used++;
+  store.set('ai-ideas-attempts', s);
+}
+function renderAttempts() {
+  const n = attemptsLeft();
+  $('#attempts').textContent = `${plural(n, 'Осталась', 'Осталось', 'Осталось')} ${n} ${plural(n, 'попытка', 'попытки', 'попыток')}. ` +
+    'Пополните счёт, чтобы снять ограничение, или попробуйте снова через 24 часа.';
+}
+
+// ---------- выпадающие списки ----------
+let DATA = null, pair = null, tf = null;
+function setupSelect(root, items, onPick) {
+  const btn = root.querySelector('.select-btn'), menu = root.querySelector('.menu');
+  menu.innerHTML = items.map((it, i) => `<button class="opt" type="button" role="option" data-i="${i}">${it.html}<span class="tick">✓</span></button>`).join('');
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    document.querySelectorAll('.select.open').forEach(s => s !== root && s.classList.remove('open'));
+    root.classList.toggle('open');
+  });
+  menu.addEventListener('click', e => {
+    const o = e.target.closest('.opt');
+    if (!o) return;
+    menu.querySelectorAll('.opt').forEach(x => x.classList.toggle('sel', x === o));
+    root.classList.remove('open', 'empty');
+    const it = items[+o.dataset.i];
+    btn.querySelector('span').className = '';
+    btn.querySelector('span').textContent = it.label;
+    onPick(it.value);
+  });
+  return i => menu.querySelectorAll('.opt')[i].click();
+}
+document.addEventListener('click', () => document.querySelectorAll('.select.open').forEach(s => s.classList.remove('open')));
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  document.querySelectorAll('.select.open').forEach(s => s.classList.remove('open'));
+  closeModal();
+});
+
+// ---------- заставка ----------
+function showLoading() {
+  const box = $('#loading'), out = $('#loadingText');
+  box.classList.add('show');
+  document.body.style.overflow = 'hidden';
+  let phrase = 0, ch = 0;
+  const tick = () => {
+    const p = LOADING_PHRASES[phrase % LOADING_PHRASES.length];
+    out.textContent = p.slice(0, ++ch);
+    if (ch < p.length) return (box.timer = setTimeout(tick, 35));
+    box.timer = setTimeout(() => { phrase++; ch = 0; tick(); }, 700);
+  };
+  tick();
+  return () => { clearTimeout(box.timer); box.classList.remove('show'); document.body.style.overflow = ''; };
+}
+
+// ---------- окна ----------
+function openModal(html, center) {
+  const m = $('#modal');
+  m.innerHTML = `<div class="modal${center ? ' center' : ''}">${html}</div>`;
+  m.classList.add('show');
+  m.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', closeModal));
+}
+function closeModal() { $('#modal').classList.remove('show'); }
+$('#modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });
+function openDisclaimer() {
+  openModal(`<h3>Дисклеймер</h3><div class="box">
+    <p>Информация в этом разделе носит ознакомительный характер и не является финансовой или инвестиционной рекомендацией. Идеи строятся автоматически по техническим индикаторам и могут не учитывать новости и события.</p>
+    <p>Решение о сделке вы принимаете самостоятельно и на свой риск. Торговля на финансовых рынках может привести к потере вложенных средств.</p>
+  </div><div class="btns"><button class="deposit" type="button" data-close>Закрыть</button></div>`);
+}
+function openNoAttempts() {
+  openModal(`<h3>Попытки закончились</h3><p style="color:var(--text2)">Пополните счёт, чтобы снять ограничение, или попробуйте снова через 24 часа</p>
+    <div class="btns"><button class="btn2" type="button" data-close>Закрыть</button><a class="deposit" href="${DEPOSIT_URL}">Пополнить</a></div>`, true);
+}
+
+// ---------- график ----------
+function drawChart(box, points, p) {
+  const W = box.clientWidth, H = box.clientHeight, padR = 64, padB = 22, padT = 8;
+  const n = points.length, extra = 5;           // как у AMarkets: 5 пустых делений справа
+  const xs = i => i / (n - 1 + extra) * (W - padR);
+  let lo = Math.min(...points.map(x => x.c)), hi = Math.max(...points.map(x => x.c));
+  const pad = (hi - lo) * .08 || hi * .001; lo -= pad; hi += pad;
+  const ys = v => padT + (hi - v) / (hi - lo) * (H - padT - padB);
+  const line = points.map((x, i) => `${i ? 'L' : 'M'}${xs(i).toFixed(1)},${ys(x.c).toFixed(1)}`).join('');
+  const area = `${line}L${xs(n - 1).toFixed(1)},${H - padB}L0,${H - padB}Z`;
+  const grid = [], labels = [];
+  for (let k = 0; k <= 4; k++) {
+    const v = lo + (hi - lo) * k / 4, y = ys(v);
+    grid.push(`<line x1="0" x2="${W - padR}" y1="${y}" y2="${y}" stroke="var(--line)"/>`);
+    labels.push(`<text x="${W - padR + 8}" y="${y + 4}">${fmtNum(v, p.digits > 2 ? p.digits : p.digits === 0 ? 0 : 2)}</text>`);
+  }
+  const step = Math.ceil(n / (W < 500 ? 4 : 9));
+  const two = v => String(v).padStart(2, '0');
+  let prevDay = null;
+  for (let i = 0; i < n; i += step) {
+    const d = new Date(points[i].t * 1000), day = d.toDateString();
+    // внутри дня подписываем время, при смене дня — дату
+    const text = day === prevDay ? `${two(d.getHours())}:${two(d.getMinutes())}` : `${two(d.getDate())}.${two(d.getMonth() + 1)}`;
+    prevDay = day;
+    grid.push(`<line x1="${xs(i)}" x2="${xs(i)}" y1="${padT}" y2="${H - padB}" stroke="var(--line)"/>`);
+    labels.push(`<text x="${xs(i)}" y="${H - 4}" text-anchor="${i ? 'middle' : 'start'}">${text}</text>`);
+  }
+  const lx = xs(n - 1), ly = ys(points[n - 1].c);
+  box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" aria-label="График цены">
+    <defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fa6a1c" stop-opacity=".5"/><stop offset="1" stop-color="#fa6a1c" stop-opacity="0"/></linearGradient></defs>
+    ${grid.join('')}<path d="${area}" fill="url(#ga)"/><path d="${line}" fill="none" stroke="#fa6a1c" stroke-width="1.5"/>
+    <circle cx="${lx}" cy="${ly}" r="9" fill="#fa6a1c" opacity=".25"><animate attributeName="r" values="5;12;5" dur="2s" repeatCount="indefinite"/></circle>
+    <circle cx="${lx}" cy="${ly}" r="4" fill="#fa6a1c"/>
+    <line id="cx" y1="${padT}" y2="${H - padB}" stroke="#fa6a1c" visibility="hidden"/>
+    ${labels.join('')}</svg><div class="tip"></div>`;
+  const svg = box.querySelector('svg'), tip = box.querySelector('.tip'), cx = box.querySelector('#cx');
+  const move = e => {
+    const r = svg.getBoundingClientRect(), x = (e.touches ? e.touches[0].clientX : e.clientX) - r.left;
+    const i = Math.max(0, Math.min(n - 1, Math.round(x / (W - padR) * (n - 1 + extra))));
+    cx.setAttribute('x1', xs(i)); cx.setAttribute('x2', xs(i)); cx.setAttribute('visibility', 'visible');
+    tip.innerHTML = `${fmtDate(points[i].t * 1000, true)}<br><b>${fmtPrice(points[i].c, p)}</b>`;
+    tip.style.display = 'block';
+    tip.style.left = Math.min(Math.max(0, xs(i) - tip.offsetWidth / 2), W - tip.offsetWidth) + 'px';
+    tip.style.top = Math.max(0, ys(points[i].c) - tip.offsetHeight - 12) + 'px';
+  };
+  const leave = () => { tip.style.display = 'none'; cx.setAttribute('visibility', 'hidden'); };
+  svg.addEventListener('mousemove', move); svg.addEventListener('touchmove', move, {passive: true});
+  svg.addEventListener('mouseleave', leave); svg.addEventListener('touchend', leave);
+}
+
+// ---------- результат ----------
+function renderResult(p, idea) {
+  const r = $('#result');
+  const lv = idea.levels;
+  const tfMs = {'30m': 18e5, '4h': 144e5, '1d': 864e5}[tf];
+  const stale = Date.now() - idea.last_candle * 1000 > tfMs * 3 && p.value !== 'btcusd';
+  const priceNote = (stale ? 'Рынок закрыт, цена на ' : 'Цена на ') + fmtDate(idea.last_candle * 1000);
+  const levels = idea.signal === 'HOLD'
+    ? `<span class="lvl">Поддержка<b>${fmtPrice(lv.support, p)}</b></span><span class="lvl">Сопротивление<b>${fmtPrice(lv.resistance, p)}</b></span>`
+    : `<span class="lvl">Вход<b>${fmtPrice(idea.current_price, p)}</b></span><span class="lvl">Цель<b>${fmtPrice(lv.target, p)}</b></span><span class="lvl">Стоп<b>${fmtPrice(lv.stop, p)}</b></span>`;
+  r.innerHTML = `
+    <div class="card inst">${icon(p.pair, true)}<div class="inst-name"><b>${esc(p.pair)}</b><i>${esc(p.name)}</i></div>
+      <div class="inst-price"><b>${fmtPrice(idea.current_price, p)}</b><i>${priceNote}</i></div><p class="inst-note">${priceNote}</p></div>
+    <div class="card main-card">
+      <div class="chart" id="chart"></div>
+      <div class="rec ${idea.signal}">
+        <div class="rec-head"><h2>Рекомендация</h2><span class="badge solid ${idea.signal}">${LABEL[idea.signal]}</span>
+          <span class="conf">уверенность ${idea.confidence}%</span></div>
+        <p>${esc(idea.conclusion)}</p>
+        <div class="levels">${levels}</div>
+        <p class="gen-at">Сгенерировано: ${fmtDate(idea.generated_at, true)}</p>
+      </div>
+      <a class="deposit" href="${DEPOSIT_URL}">Пополнить</a>
+    </div>
+    <div class="card inds">${idea.indicators.map(i => `<div class="ind"><div><b>${esc(i.title)}</b><i>${esc(i.signal)}</i></div>
+      <span class="badge soft ${i.signal_direction}">${LABEL[i.signal_direction]}</span></div>`).join('')}</div>
+    <p class="note">Цены: ${esc(DATA.source)}${p.value === 'xauusd' ? ', золото по фьючерсу COMEX' : ''}. Котировки брокера могут немного отличаться</p>
+    <button class="disc-btn" type="button" id="discBtn">Дисклеймер</button>`;
+  r.hidden = false;
+  $('#perks').hidden = true;
+  drawChart($('#chart'), idea.chart, p);
+  $('#discBtn').addEventListener('click', openDisclaimer);
+  r.scrollIntoView({behavior: 'smooth', block: 'start'});
+}
+
+$('#gen').addEventListener('click', async () => {
+  if (!pair || !tf) return;
+  if (attemptsLeft() === 0) return openNoAttempts();
+  $('#gen').disabled = true;
+  const hide = showLoading();
+  const started = Date.now();
+  let data = null;
+  try { data = await loadData(); } catch (e) { /* покажем ошибку ниже */ }
+  await new Promise(res => setTimeout(res, Math.max(0, LOADING_MS - (Date.now() - started))));
+  hide();
+  $('#gen').disabled = false;
+  const p = data && data.pairs.find(x => x.value === pair);
+  const idea = data && data.ideas[`${pair}_${tf}`];
+  if (!idea) {
+    $('#result').hidden = false;
+    $('#result').innerHTML = '<p class="error">Не удалось получить идею. Попробуйте через минуту</p>';
+    return;
+  }
+  useAttempt();
+  renderAttempts();
+  renderResult(p, idea);
+});
+
+async function loadData() {
+  const r = await fetch('data/ideas.json?v=' + Date.now(), {cache: 'no-store'});
+  if (!r.ok) throw new Error(r.status);
+  DATA = await r.json();
+  return DATA;
+}
+
+// ---------- старт ----------
+$('#perks').innerHTML = PERKS.map(t => `<div class="card perk"><span class="perk-i"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1l2.4 6.6L21 10l-6.6 2.4L12 19l-2.4-6.6L3 10l6.6-2.4z"/></svg></span>${esc(t)}</div>`).join('');
+renderAttempts();
+loadData().then(d => {
+  setupSelect($('#pairSel'), d.pairs.map(p => ({value: p.value, label: p.pair,
+    html: `${icon(p.pair)}<span><b>${esc(p.pair)}</b><i>${esc(p.name)}</i></span>`})), v => {
+    pair = v; $('#gen').disabled = !(pair && tf);
+  });
+  const pickTf = setupSelect($('#tfSel'), d.timeframes.map(t => ({value: t.timeframe, label: t.label,
+    html: `<span><b>${esc(t.label)}</b></span>`})), v => {
+    tf = v; $('#gen').disabled = !(pair && tf);
+  });
+  pickTf(0);
+}).catch(() => {
+  $('#attempts').textContent = 'Не удалось загрузить список инструментов. Обновите страницу';
+});
+</script>
+</body>
+</html>
