@@ -484,8 +484,7 @@ function renderResult(p, idea) {
           <span class="conf">уверенность ${idea.confidence}%</span></div>
         <p>${esc(idea.conclusion)}</p>
         <div class="levels">${levels}</div>
-        <p class="gen-at">Сгенерировано: ${fmtDate(idea.generated_at, true)}${idea.conclusion_source === 'ai'
-          ? ` · текст написал ИИ (${esc(idea.ai_model)}), числа проверены расчётом` : ' · текст по шаблону'}</p>
+        <p class="gen-at">Сгенерировано: ${fmtDate(idea.generated_at, true)}</p>
       </div>
       <a class="btn deposit js-reg" href="${REG_URL}" target="_blank" rel="noopener">Открыть счёт</a>
     </div>
