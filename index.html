@@ -272,7 +272,7 @@ const PERKS = [
   '6 индикаторов по каждому инструменту',
   'Итог голосованием индикаторов, без противоречий в тексте',
   'Цель и стоп по ближайшим уровням',
-  'Пересчёт каждый час',
+  'Пересчёт каждые 2 часа',
 ];
 const LABEL = {BUY: 'Покупать', SELL: 'Продавать', HOLD: 'Нейтрально'};
 
@@ -290,15 +290,28 @@ const FLAG = {
   XAU: '<svg viewBox="0 0 24 24"><defs><linearGradient id="gXau" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE38A"/><stop offset=".55" stop-color="#E9B526"/><stop offset="1" stop-color="#B9831A"/></linearGradient></defs>' +
     '<circle cx="12" cy="12" r="12" fill="url(#gXau)"/><circle cx="12" cy="12" r="8.6" fill="none" stroke="#FFF3C4" stroke-opacity=".7"/><text x="12" y="15.6" text-anchor="middle" font-size="9.5" font-weight="800" font-family="Segoe UI,Arial" fill="#7A5410">Au</text></svg>',
   BTC: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#F7931A"/><text x="12" y="17" text-anchor="middle" font-size="14" font-weight="800" font-family="Segoe UI,Arial" fill="#fff">₿</text></svg>',
+  ETH: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#627EEA"/><path d="M12 4l-4.6 7.8L12 14.5l4.6-2.7z" fill="#fff"/><path d="M12 15.4l-4.6-2.7L12 20l4.6-7.3z" fill="#fff" opacity=".75"/></svg>',
+  XAG: '<svg viewBox="0 0 24 24"><defs><linearGradient id="gXag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4F6F8"/><stop offset=".55" stop-color="#BFC6CE"/><stop offset="1" stop-color="#8D96A0"/></linearGradient></defs>' +
+    '<circle cx="12" cy="12" r="12" fill="url(#gXag)"/><circle cx="12" cy="12" r="8.6" fill="none" stroke="#fff" stroke-opacity=".7"/><text x="12" y="15.6" text-anchor="middle" font-size="9.5" font-weight="800" font-family="Segoe UI,Arial" fill="#4A5560">Ag</text></svg>',
+  AUD: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1E3A8A"/><path d="M4 6h8M8 2v8" stroke="#fff" stroke-width="2.2"/><path d="M4 6h8M8 2v8" stroke="#D22F3C" stroke-width="1"/>' +
+    '<circle cx="16.5" cy="9" r="1.1" fill="#fff"/><circle cx="18.5" cy="13" r="1.1" fill="#fff"/><circle cx="15" cy="16.5" r="1.1" fill="#fff"/><circle cx="8" cy="16" r="1.5" fill="#fff"/></svg>',
+  NZD: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1E3A8A"/><path d="M4 6h8M8 2v8" stroke="#fff" stroke-width="2.2"/><path d="M4 6h8M8 2v8" stroke="#D22F3C" stroke-width="1"/>' +
+    '<circle cx="16.5" cy="9" r="1.2" fill="#D22F3C" stroke="#fff" stroke-width=".5"/><circle cx="18.5" cy="13.5" r="1.2" fill="#D22F3C" stroke="#fff" stroke-width=".5"/><circle cx="15" cy="17" r="1.2" fill="#D22F3C" stroke="#fff" stroke-width=".5"/></svg>',
+  CAD: '<svg viewBox="0 0 24 24"><defs><clipPath id="cCad"><circle cx="12" cy="12" r="12"/></clipPath></defs><g clip-path="url(#cCad)"><rect width="24" height="24" fill="#fff"/><rect width="6" height="24" fill="#D22F3C"/><rect x="18" width="6" height="24" fill="#D22F3C"/>' +
+    '<path d="M12 6.5l1 2.2 1.6-.6-.5 3 1.7-1.2.5 1.4 1.6-.3-1 2.2.6.5-3 .7.2 1.6H12.4l-.4 2.4-.4-2.4H11l.2-1.6-3-.7.6-.5-1-2.2 1.6.3.5-1.4 1.7 1.2-.5-3 1.6.6z" fill="#D22F3C"/></g></svg>',
+  CHF: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#D52B1E"/><path d="M10 6h4v4h4v4h-4v4h-4v-4H6v-4h4z" fill="#fff"/></svg>',
+  DE: '<svg viewBox="0 0 24 24"><defs><clipPath id="cDe"><circle cx="12" cy="12" r="12"/></clipPath></defs><g clip-path="url(#cDe)"><rect width="24" height="8" fill="#1A1A1A"/><rect y="8" width="24" height="8" fill="#DD0000"/><rect y="16" width="24" height="8" fill="#FFCE00"/></g></svg>',
+  WTI: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1F2933"/><path d="M12 5c2.6 3.6 4.2 6 4.2 8.2A4.2 4.2 0 0 1 7.8 13.2C7.8 11 9.4 8.6 12 5z" fill="#F5A623"/><text x="12" y="21" text-anchor="middle" font-size="4.2" font-weight="800" font-family="Segoe UI,Arial" fill="#fff">WTI</text></svg>',
+  BRENT: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#0B3B5C"/><path d="M12 5c2.6 3.6 4.2 6 4.2 8.2A4.2 4.2 0 0 1 7.8 13.2C7.8 11 9.4 8.6 12 5z" fill="#F5A623"/><text x="12" y="21" text-anchor="middle" font-size="3.6" font-weight="800" font-family="Segoe UI,Arial" fill="#fff">BRENT</text></svg>',
+  GAS: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#E6F0FA"/><path d="M12 4.5c.6 2.4 3.8 4.2 3.8 8a3.8 3.8 0 0 1-7.6 0c0-1.6.8-2.8 1.8-3.8.1 1.2.6 2 1.4 2.4-.4-2.4.2-4.6.6-6.6z" fill="#2F7DE1"/><path d="M12 12.2c.8 1 1.6 1.7 1.6 2.9a1.6 1.6 0 0 1-3.2 0c0-1 .8-1.9 1.6-2.9z" fill="#9CC8F5"/></svg>',
 };
 let iconN = 0;   // у каждой копии свои id, иначе обрезка и градиент в скрытой копии не рисуются
-const flag = c => FLAG[c].replace(/(cUsd|cGbp|gXau)/g, '$1_' + (++iconN));
-function icon(pair, big) {
+const flag = c => FLAG[c].replace(/(cUsd|cGbp|gXau|gXag|cCad|cDe)/g, '$1_' + (++iconN));
+function icon(p, big) {
   const cls = 'ico' + (big ? ' big' : '');
-  if (pair === 'XAUUSD') return `<span class="${cls} one">${flag('XAU')}</span>`;
-  if (pair === 'BTCUSD') return `<span class="${cls} one">${flag('BTC')}</span>`;
-  if (pair === 'S&P500') return `<span class="${cls} one">${flag('USD')}</span>`;
-  return `<span class="${cls}">${flag(pair.slice(0, 3))}${flag(pair.slice(3, 6))}</span>`;
+  const parts = p.icon || [p.pair.slice(0, 3), p.pair.slice(3, 6)];
+  if (parts.length === 1) return `<span class="${cls} one">${flag(parts[0])}</span>`;
+  return `<span class="${cls}">${flag(parts[0])}${flag(parts[1])}</span>`;
 }
 
 // ---------- помощники ----------
@@ -456,13 +469,13 @@ function renderResult(p, idea) {
   const r = $('#result');
   const lv = idea.levels;
   const tfMs = {'30m': 18e5, '4h': 144e5, '1d': 864e5}[tf];
-  const stale = Date.now() - idea.last_candle * 1000 > tfMs * 3 && p.value !== 'btcusd';
+  const stale = Date.now() - idea.last_candle * 1000 > tfMs * 3 && !['btcusd', 'ethusd'].includes(p.value);
   const priceNote = (stale ? 'Рынок закрыт, цена на ' : 'Цена на ') + fmtDate(idea.last_candle * 1000);
   const levels = idea.signal === 'HOLD'
     ? `<span class="lvl">Поддержка<b>${fmtPrice(lv.support, p)}</b></span><span class="lvl">Сопротивление<b>${fmtPrice(lv.resistance, p)}</b></span>`
     : `<span class="lvl">Вход<b>${fmtPrice(idea.current_price, p)}</b></span><span class="lvl">Цель<b>${fmtPrice(lv.target, p)}</b></span><span class="lvl">Стоп<b>${fmtPrice(lv.stop, p)}</b></span>`;
   r.innerHTML = `
-    <div class="card inst">${icon(p.pair, true)}<div class="inst-name"><b>${esc(p.pair)}</b><i>${esc(p.name)}</i></div>
+    <div class="card inst">${icon(p, true)}<div class="inst-name"><b>${esc(p.pair)}</b><i>${esc(p.name)}</i></div>
       <div class="inst-price"><b>${fmtPrice(idea.current_price, p)}</b><i>${priceNote}</i></div><p class="inst-note">${priceNote}</p></div>
     <div class="card main-card">
       <div class="chart" id="chart"></div>
@@ -479,7 +492,7 @@ function renderResult(p, idea) {
     <div class="card inds">${idea.indicators.map(i => `<div class="ind"><div><b>${esc(i.title)}</b><i>${esc(i.signal)}</i></div>
       <span class="badge soft ${i.signal_direction}">${LABEL[i.signal_direction]}</span></div>`).join('')}</div>
     ${idea.news ? `<div class="card news"><h2>Анализ рыночных новостей и событий</h2><p>${esc(idea.news)}</p></div>` : ''}
-    <p class="note">Цены: ${esc(DATA.source)}${p.value === 'xauusd' ? ', золото по фьючерсу COMEX' : ''}. Котировки брокера могут немного отличаться.</p>
+    <p class="note">Цены: ${esc(DATA.source)}${['xauusd', 'xagusd', 'wti', 'brent', 'ngas'].includes(p.value) ? ', металлы и энергоносители по фьючерсам' : ''}. Котировки брокера могут немного отличаться.</p>
     <button class="disc-btn" type="button" id="discBtn">Дисклеймер</button>`;
   r.hidden = false;
   $('#perks').hidden = true;
@@ -537,7 +550,7 @@ $('#perks').innerHTML = PERKS.map(t => `<div class="card perk"><span class="perk
 renderAttempts();
 loadData().then(d => {
   setupSelect($('#pairSel'), d.pairs.map(p => ({value: p.value, label: p.pair,
-    html: `${icon(p.pair)}<span><b>${esc(p.pair)}</b><i>${esc(p.name)}</i></span>`})), v => {
+    html: `${icon(p)}<span><b>${esc(p.pair)}</b><i>${esc(p.name)}</i></span>`})), v => {
     pair = v; $('#gen').disabled = !(pair && tf);
   });
   const pickTf = setupSelect($('#tfSel'), d.timeframes.map(t => ({value: t.timeframe, label: t.label,
