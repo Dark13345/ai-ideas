@@ -468,9 +468,11 @@ function drawChart(box, points, p) {
 function renderResult(p, idea) {
   const r = $('#result');
   const lv = idea.levels;
-  const tfMs = {'30m': 18e5, '4h': 144e5, '1d': 864e5}[tf];
-  const stale = Date.now() - idea.last_candle * 1000 > tfMs * 3 && !['btcusd', 'ethusd'].includes(p.value);
-  const priceNote = (stale ? 'Рынок закрыт, цена на ' : 'Цена на ') + fmtDate(idea.last_candle * 1000);
+  // время цены — по последней 30-минутной свече: у дневной свечи время начала дня, а не последней сделки
+  const short = DATA.ideas[`${p.value}_30m`] || idea;
+  // рынок закрыт, если на момент пересчёта последней свече было больше полутора часов
+  const stale = new Date(DATA.updated_at) - short.last_candle * 1000 > 1.5 * 3600e3 && !['btcusd', 'ethusd'].includes(p.value);
+  const priceNote = (stale ? 'Рынок закрыт, цена на ' : 'Цена на ') + fmtDate((short.last_candle + 1800) * 1000);
   const levels = idea.signal === 'HOLD'
     ? `<span class="lvl">Поддержка<b>${fmtPrice(lv.support, p)}</b></span><span class="lvl">Сопротивление<b>${fmtPrice(lv.resistance, p)}</b></span>`
     : `<span class="lvl">Вход<b>${fmtPrice(idea.current_price, p)}</b></span><span class="lvl">Цель<b>${fmtPrice(lv.target, p)}</b></span><span class="lvl">Стоп<b>${fmtPrice(lv.stop, p)}</b></span>`;
